@@ -46,8 +46,26 @@
   font-weight: 500;
 }
 
+/* Menú desplegable con fondo sólido en móvil */
+.navbar-collapse {
+  background: #fff;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 16px;
+  margin-top: 8px;
+  box-shadow: var(--shadow-md);
+}
+
 .nav-links {
   gap: 4px;
+}
+
+@media (min-width: 992px) {
+  .navbar-collapse {
+    background: transparent;
+    padding: 0;
+    margin-top: 0;
+    box-shadow: none;
+  }
 }
 
 .nav-links .nav-link {
@@ -79,18 +97,19 @@
 }
 
 /* Botón hamburger con fondo */
-.navbar-toggler {
-  border: 2px solid var(--c-primary);
-  border-radius: 10px;
-  padding: 8px 10px;
-  background: rgba(108, 60, 233, 0.06);
+.navbar .navbar-toggler {
+  border: 2px solid var(--c-primary) !important;
+  border-radius: 10px !important;
+  padding: 8px 10px !important;
+  background-color: rgba(108, 60, 233, 0.08) !important;
   transition: all var(--transition);
+  box-shadow: none !important;
 }
 
-.navbar-toggler:hover,
-.navbar-toggler:focus {
-  background: rgba(108, 60, 233, 0.12);
-  box-shadow: 0 0 0 4px rgba(108, 60, 233, 0.1);
+.navbar .navbar-toggler:hover,
+.navbar .navbar-toggler:focus {
+  background-color: rgba(108, 60, 233, 0.15) !important;
+  box-shadow: 0 0 0 4px rgba(108, 60, 233, 0.1) !important;
 }
 
 .navbar-toggler-icon {
