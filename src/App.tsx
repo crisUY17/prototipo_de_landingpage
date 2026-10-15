@@ -444,13 +444,12 @@ function App() {
                 </div>
               </div>
             </Col>
-            <Col lg={7}>
+            <Col lg={7} className="contact-map-col">
               <div className="map-wrapper animate-fade-in-up delay-3">
                 <iframe
                   title="Ubicación en mapa"
                   src={c.contacto.mapaEmbedUrl}
                   width="100%"
-                  height="400"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"

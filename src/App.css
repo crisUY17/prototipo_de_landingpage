@@ -457,17 +457,25 @@
   font-weight: 500;
 }
 
+.contact-map-col {
+  display: flex;
+}
+
 .map-wrapper {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--c-border);
-  height: 100%;
+  flex: 1;
   min-height: 400px;
+  display: flex;
 }
 
 .map-wrapper iframe {
   display: block;
+  flex: 1;
+  width: 100%;
+  border: 0;
 }
 
 /* ============ FORMULARIO ============ */
