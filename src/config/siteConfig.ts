@@ -150,7 +150,7 @@ export const siteConfig: SiteConfig = {
     titulo: "Sobre nosotros",
     texto:
       "Somos un estudio de desarrollo web apasionado por crear soluciones digitales que marquen la diferencia. Con experiencia en diseño y desarrollo front-end, ayudamos a empresas de todos los tamaños a tener presencia profesional en internet, cuidando cada detalle del diseño y la experiencia de usuario.",
-    imagen: "./favicon.svg",
+    imagen: "./imagen-prueba.jpg",
     imagenAlt: "Equipo de trabajo",
     stats: [
       { valor: "1", label: "Proyecto entregado" },
