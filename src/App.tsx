@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   Navbar,
@@ -176,6 +176,72 @@ function InstagramIcon() {
   );
 }
 
+function SunIcon() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="5" />
+      <line x1="12" y1="1" x2="12" y2="3" />
+      <line x1="12" y1="21" x2="12" y2="23" />
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+      <line x1="1" y1="12" x2="3" y2="12" />
+      <line x1="21" y1="12" x2="23" y2="12" />
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+    </svg>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  );
+}
+
+/* ============ Botón de tema (sol/luna) ============ */
+
+function ThemeToggleButton({
+  darkMode,
+  onToggle,
+  className = "",
+}: {
+  darkMode: boolean;
+  onToggle: () => void;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      className={`theme-toggle ${className}`}
+      onClick={onToggle}
+      aria-label={darkMode ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+      title={darkMode ? "Modo claro" : "Modo oscuro"}
+    >
+      {darkMode ? <SunIcon /> : <MoonIcon />}
+    </button>
+  );
+}
+
 /* ============ Componente principal ============ */
 
 function App() {
@@ -186,6 +252,23 @@ function App() {
   const [formEmail, setFormEmail] = useState("");
   const [formMensaje, setFormMensaje] = useState("");
   const [formEnviado, setFormEnviado] = useState(false);
+
+  // Detectar tema inicial: preferencia guardada o preferencia del sistema
+  const [darkMode, setDarkMode] = useState(() => {
+    const stored = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+    return stored ? stored === "dark" : prefersDark;
+  });
+
+  // Aplicar clase al <html> y persistir
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode);
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
+
+  const toggleTheme = () => setDarkMode((prev) => !prev);
 
   const scrollTo = (id: string) => {
     setNavExpanded(false);
@@ -206,12 +289,22 @@ function App() {
       .replace("{mensaje}", formMensaje || "");
 
     const url = `https://wa.me/${c.whatsapp.numero}?text=${encodeURIComponent(mensaje)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+
+    // Click programático en un <a>: más fiable que window.open en móviles,
+    // donde el bloqueador de popups suele bloquear la apertura desde un submit.
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.target = "_blank";
+    anchor.rel = "noopener noreferrer";
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+
     setFormEnviado(true);
   };
 
   return (
-    <>
+    <div className="theme-transition">
       {/* ============ NAVBAR ============ */}
       <Navbar
         expand="lg"
@@ -239,7 +332,14 @@ function App() {
               <span className="brand-slogan">{c.empresa.slogan}</span>
             </span>
           </Navbar.Brand>
-          <Navbar.Toggle aria-label="Abrir menú de navegación" />
+          <div className="navbar-actions">
+            <ThemeToggleButton
+              darkMode={darkMode}
+              onToggle={toggleTheme}
+              className="d-lg-none"
+            />
+            <Navbar.Toggle aria-label="Abrir menú de navegación" />
+          </div>
           <Navbar.Collapse>
             <Nav className="ms-auto align-items-lg-center nav-links">
               {c.nav.map((link) => (
@@ -254,7 +354,12 @@ function App() {
                   {link.label}
                 </Nav.Link>
               ))}
-              <Button className="btn-cta" onClick={() => scrollTo("contacto")}>
+              <ThemeToggleButton
+                darkMode={darkMode}
+                onToggle={toggleTheme}
+                className="d-none d-lg-inline-flex"
+              />
+              <Button className="btn-cta" onClick={() => scrollTo("formulario")}>
                 Contactanos
               </Button>
             </Nav>
@@ -611,7 +716,7 @@ function App() {
           </p>
         </Container>
       </footer>
-    </>
+    </div>
   );
 }
 

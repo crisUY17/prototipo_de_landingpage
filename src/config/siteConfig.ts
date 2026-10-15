@@ -132,6 +132,7 @@ export const siteConfig: SiteConfig = {
     { label: "Inicio", href: "#inicio" },
     { label: "Nosotros", href: "#nosotros" },
     { label: "Servicios", href: "#servicios" },
+    { label: "Donde encontrarnos", href: "#contacto" },
   ],
   hero: {
     tituloLinea1: "Creamos páginas web que",

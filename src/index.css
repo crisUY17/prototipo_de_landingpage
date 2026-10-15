@@ -15,6 +15,8 @@
   --c-text-muted: #6b7280;
   --c-text-muted-light: #b8b3c7;
   --c-border: rgba(108, 60, 233, 0.12);
+  --c-surface: #ffffff;
+  --c-surface-2: #f8f7fc;
 
   /* Tipografía */
   --font-heading: 'Poppins', system-ui, sans-serif;
@@ -40,6 +42,24 @@
   scroll-padding-top: var(--nav-height);
 }
 
+/* ============ TEMA OSCURO ============ */
+html.dark {
+  --c-bg-dark: #08061a;
+  --c-bg-dark-2: #0f0b24;
+  --c-bg-light: #14102a;
+  --c-bg-light-2: #1a1536;
+  --c-text-dark: #f3f1fa;
+  --c-text-light: #f3f1fa;
+  --c-text-muted: #a29db8;
+  --c-text-muted-light: #8f8aa6;
+  --c-border: rgba(255, 255, 255, 0.12);
+  --c-surface: #241e46;
+  --c-surface-2: #2e2658;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
 *,
 *::before,
 *::after {
@@ -49,6 +69,22 @@
 body {
   margin: 0;
   line-height: 1.6;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+/* Transición suave de tema en las superficies principales.
+   Los componentes con hover (botones, cards) ya usan `transition: all`,
+   por lo que animan el cambio de tema sin tocar sus animaciones. */
+.theme-transition .section,
+.theme-transition .main-navbar,
+.theme-transition .navbar-collapse,
+.theme-transition .form-card,
+.theme-transition .footer-section {
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
 }
 
 #root {
