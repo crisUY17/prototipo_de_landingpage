@@ -110,7 +110,17 @@ export interface SiteConfig {
     /** [INFO] Texto de copyright */
     copyright: string;
   };
+  whatsapp: {
+    /** [INFO] Número de WhatsApp en formato internacional sin + ni espacios (ej: 54911XXXXXXXX) */
+    numero: string;
+    /** [INFO] Plantilla del mensaje. Variables: {nombre}, {email}, {plan}, {mensaje} */
+    mensajeTemplate: string;
+  };
 }
+
+/** ===========================================
+ * Aquí comienza la configuración editable del sitio
+ * ===========================================*/
 
 export const siteConfig: SiteConfig = {
   empresa: {
@@ -212,11 +222,18 @@ export const siteConfig: SiteConfig = {
     mensajePlaceholder:
       "Contanos sobre tu proyecto: tipo de negocio, qué es lo que buscás y plazos estimados.",
     submitLabel: "Enviar consulta",
-    submitExito: "¡Gracias! Hemos recibido tu consulta.",
+    submitExito: "¡Gracias! Continua tu consulta por WhatsApp.",
   },
   footer: {
     resumen:
       "Diseño y desarrollo de páginas web modernas y optimizadas para empresas que quieren destacar en internet.",
     copyright: "Todos los derechos reservados.",
+  },
+  whatsapp: {
+    numero: "59892099594",
+    mensajeTemplate: `Hola, soy *{nombre}*.
+Mi correo es {email}.
+Estoy interesado en el plan: *{plan}*.
+{mensaje}`,
   },
 };
